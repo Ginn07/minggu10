@@ -4,13 +4,21 @@ import requests
 from datetime import datetime
 from bson import ObjectId
 
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+DB_NAME =  os.environ.get("DB_NAME")
+
+client = MongoClient(MONGODB_URI)
+
+db = client[DB_NAME]
+
 app = Flask(__name__)
-
-password = '1'
-cxn_str = f'mongodb+srv://Ginn:{password}@cluster0.qeaocal.mongodb.net/?retryWrites=true&w=majority'
-client = MongoClient(cxn_str)
-
-db = client.dbsaya
 
 @app.route('/')
 def main():
